@@ -1,5 +1,9 @@
 # End-to- End implementation of Loan_tap_classification
 
+![how-to-build-an-end-to-end-ml-pipeline-1](https://github.com/user-attachments/assets/941e5ea6-0554-4a35-b342-2cd29caeef9f)
+
+
+
 ## Approach : 
 
 Perform Exploratory data analysis 
@@ -111,5 +115,58 @@ Pincodes with Positive Coefficient: 05113, 29597
 LoanTap can increase their market presence in Pincodes with Positive Coefficient.
 LoanTap should minimize their marketing/sales expenditure in Pincodes with Negative Coefficient.
 Pincode based market segmentation should be included at strategic levels.
+
+#### Demo model version stored in classifer.pkl version 
+
+## Streamlit demo : 
+
+
+[streamlit-streamlit_demo-2024-09-18-21-09-59.webm](https://github.com/user-attachments/assets/cc4b8b57-7f8c-40d2-80d8-d96098f3f3fc)
+
+
+
+## Flask API : 
+
+Created a flask api with endpoint /predict and tested with a sample datapoint in JSON format in Postman [flask_demo.py] 
+
+## Docker container : 
+
+Built a decoker image [Dockerfile] and pushed to docker hub   : 
+
+ build docker image --> docker build -t new_mykee_docker_flask . 
+
+ Run docker image --> docker run -d -p 5000:5000 new_mykee_docker_flask
+
+create a tag --> docker tag new_mykee_docker_flask mahikshith/docker_mykee_flask_loan_classifier:hypertag
+
+push to docker hub --> docker push mahikshith/docker_mykee_flask_loan_classifier:hypertag
+
+docker hub container link  -->  [https://hub.docker.com/r/mahikshith/docker_mykee_flask_loan_classifier/tags]
+
+
+## AWS EC2 t2.micro instance : 
+
+For the current model t2.micro instance is good enough for demo purpose 
+
+First created a t2.micro instance and used SSH from my local machine to connect with the instance on AWS 
+
+Installed docker on the instance and pulled  docker image from my docker hub into instance and made small changes to inbound rules and exposed the public address 
+
+Tested the public address with endpoint /predict on Postman by sending a POST request with a sample JSON data point.
+
+## Experimented with AWS ECS +ECR + Fargate cluster :  
+
+Pushed docker image into ECR with IAM access key from AWS CLI 
+
+With the Fargate cluster defined a Task 
+
+From the Task fetched public address , tested the endpoint /predict and terminated all instances after demo.
+
+
+
+
+
+
+
 
 ---By mahikshith.
